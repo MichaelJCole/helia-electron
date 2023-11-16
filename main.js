@@ -4,12 +4,12 @@ const { app, BrowserWindow } = require('electron')
 
 /**
  * Added to test without dynamic import 
-*/
 import { createHelia } from 'helia'
 
 export async function createNode () {
   return await createHelia()
 }
+*/
 
 let mainWindow
 
@@ -40,8 +40,11 @@ app.on('ready', async () => {
   try {
     // Helia is an ESM-only module but Electron currently only supports CJS
     // at the top level, so we have to use dynamic imports to load it
-    //const { createNode } = await import('./helia.mjs')
-    const node = await createNode()
+    // const { createNode } = await import('./helia.mjs')
+    //const node = await createNode()
+
+    const { createHelia } = await import('helia')
+    const node = createHelia()
     const id = node.libp2p.peerId
     console.log(id)
   } catch (err) {
